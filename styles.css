@@ -1,0 +1,264 @@
+/* التصميم الصناعي الداكن */
+:root {
+    --bg-primary: #0a0e17;
+    --bg-secondary: #121a29;
+    --bg-grid: rgba(0, 255, 255, 0.03);
+    --accent-cyan: #00ffff;
+    --accent-orange: #ff6b35;
+    --accent-green: #00ff9d;
+    --accent-purple: #9d4edd;
+    --accent-yellow: #ffd166;
+    --text-primary: #e0e6ed;
+    --text-secondary: #8892b0;
+    --border-color: #1e2d4a;
+    --hud-bg: rgba(18, 26, 41, 0.9);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Rajdhani', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* شبكة هندسية متحركة */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(var(--bg-grid) 1px, transparent 1px),
+        linear-gradient(90deg, var(--bg-grid) 1px, transparent 1px);
+    background-size: 50px 50px;
+    pointer-events: none;
+    z-index: -1;
+    animation: gridMove 20s linear infinite;
+}
+
+@keyframes gridMove {
+    0% { transform: translate(0, 0); }
+    100% { transform: translate(50px, 50px); }
+}
+
+/* الحاوية الرئيسية */
+.app-container {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 20px;
+    padding: 20px;
+    max-width: 1800px;
+    margin: 0 auto;
+    height: 100vh;
+}
+
+/* اللوحة الجانبية */
+.control-panel {
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    padding: 25px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    overflow-y: auto;
+}
+
+/* العناوين */
+h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    background: linear-gradient(45deg, var(--accent-cyan), var(--accent-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-align: center;
+    margin-bottom: 30px;
+    text-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+}
+
+h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.4rem;
+    color: var(--accent-cyan);
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+/* أشرطة التحكم */
+.control-group {
+    margin-bottom: 25px;
+}
+
+.control-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.control-value {
+    background: var(--hud-bg);
+    border: 1px solid var(--accent-cyan);
+    border-radius: 6px;
+    padding: 4px 12px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 0.9rem;
+    color: var(--accent-cyan);
+}
+
+.slider-container {
+    position: relative;
+    height: 40px;
+    background: var(--bg-primary);
+    border-radius: 8px;
+    padding: 5px;
+    border: 1px solid var(--border-color);
+}
+
+input[type="range"] {
+    width: 100%;
+    height: 6px;
+    background: var(--border-color);
+    border-radius: 3px;
+    outline: none;
+    -webkit-appearance: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* ألوان مخصصة لكل شريط */
+#p_res::-webkit-slider-thumb { background: var(--accent-cyan); box-shadow: 0 0 10px var(--accent-cyan); }
+#wc::-webkit-slider-thumb { background: var(--accent-orange); box-shadow: 0 0 10px var(--accent-orange); }
+#api::-webkit-slider-thumb { background: var(--accent-green); box-shadow: 0 0 10px var(--accent-green); }
+#tid::-webkit-slider-thumb { background: var(--accent-purple); box-shadow: 0 0 10px var(--accent-purple); }
+#rate::-webkit-slider-thumb { background: var(--accent-yellow); box-shadow: 0 0 10px var(--accent-yellow); }
+
+/* لوحة العرض */
+.visual-panel {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    gap: 20px;
+}
+
+.plot-container {
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* شاشة HUD */
+.hud-overlay {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: var(--hud-bg);
+    border: 2px solid var(--accent-cyan);
+    border-radius: 10px;
+    padding: 15px;
+    min-width: 200px;
+    backdrop-filter: blur(10px);
+}
+
+.hud-item {
+    margin-bottom: 10px;
+}
+
+.hud-label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+}
+
+.hud-value {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.status-optimal { color: var(--accent-green); }
+.status-warning { color: var(--accent-yellow); }
+.status-danger { color: var(--accent-orange); }
+
+/* مقطع البئر المتحرك */
+.wellbore-container {
+    position: relative;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wellbore-svg {
+    width: 200px;
+    height: 600px;
+}
+
+/* تدفق السائل المتحرك */
+.flow-animation {
+    animation: flowMove 2s ease-in-out infinite;
+}
+
+@keyframes flowMove {
+    0%, 100% { transform: translateY(0); opacity: 0.6; }
+    50% { transform: translateY(-20px); opacity: 1; }
+}
+
+/* فقاعات الغاز */
+.bubble {
+    animation: bubbleFloat 3s linear infinite;
+}
+
+@keyframes bubbleFloat {
+    0% { transform: translateY(600px) scale(0); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-50px) scale(1.5); opacity: 0; }
+}
+
+/* لوحة IPR */
+.ipr-dashboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* تفاعل */
+button {
+    background: linear-gradient(45deg, var(--accent-cyan), var(--accent-purple));
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    color: var(--bg-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 20px;
+    width: 100%;
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+}
